@@ -1,0 +1,61 @@
+# Visual Studio
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+*.log
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+*.nuspec
+project.lock.json
+project.fragment.lock.json
+
+# Dotnet CLI
+artifacts/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Resharper / Rider
+_ReSharper*/
+*.DotSettings.user
+
+# Windows image thumbnails
+Thumbs.db
+ehthumbs.db
+
+# User-specific files
+*.userprefs
+
+# Localization
+*.resx.*
+*.resources
+
+# Others
+*.dbmdl
+*.bak
+*.cache
+*.tmp
+
+# JetBrains Rider
+.idea/
+
+# Rider local history
+.idea/.idea/
+
+# Mac
+.DS_Store
+
+# VS Code workspace
+*.code-workspace
