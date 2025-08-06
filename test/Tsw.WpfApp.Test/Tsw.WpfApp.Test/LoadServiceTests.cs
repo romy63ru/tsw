@@ -1,9 +1,4 @@
-using System;
-using System.IO;
-using System.Linq;
-using Tsw.WpfApp.Model;
 using Tsw.WpfApp.Services;
-using Xunit;
 
 namespace Tsw.WpfApp.Test
 {
