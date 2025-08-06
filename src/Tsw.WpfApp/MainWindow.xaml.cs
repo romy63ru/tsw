@@ -2,16 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Tsw.WpfApp.Model;
 using Tsw.WpfApp.Services;
 
@@ -22,18 +13,18 @@ namespace Tsw.WpfApp
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        private ObservableCollection<Car> _cars = new();
-        public ObservableCollection<Car> Cars
+        private ObservableCollection<Auto> _auta = new();
+        public ObservableCollection<Auto> Auta
         {
-            get => _cars;
-            set { _cars = value; OnPropertyChanged(nameof(Cars)); }
+            get => _auta;
+            set { _auta = value; OnPropertyChanged(nameof(Auta)); }
         }
 
-        private ObservableCollection<CarSummary> _carSummaries = new();
-        public ObservableCollection<CarSummary> CarSummaries
+        private ObservableCollection<AutoSummary> _carSummaries = new();
+        public ObservableCollection<AutoSummary> AutoSummaries
         {
             get => _carSummaries;
-            set { _carSummaries = value; OnPropertyChanged(nameof(CarSummaries)); }
+            set { _carSummaries = value; OnPropertyChanged(nameof(AutoSummaries)); }
         }
 
         public MainWindow()
@@ -41,18 +32,26 @@ namespace Tsw.WpfApp
             InitializeComponent();
             DataContext = this;
 
-            Cars.CollectionChanged += Cars_CollectionChanged;
+            Auta.CollectionChanged += Cars_CollectionChanged;
         }
 
         private void Cars_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
-                foreach (Car car in e.NewItems)
+            {
+                foreach (Auto car in e.NewItems)
+                {
                     car.PropertyChanged += Car_PropertyChanged;
+                }
+            }
 
             if (e.OldItems != null)
-                foreach (Car car in e.OldItems)
+            {
+                foreach (Auto car in e.OldItems)
+                {
                     car.PropertyChanged -= Car_PropertyChanged;
+                }
+            }
 
             RecalculateSummaries();
         }
@@ -60,7 +59,9 @@ namespace Tsw.WpfApp
         private void Car_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName is "Cena" or "DPH" or "DatumProdeje")
+            {
                 RecalculateSummaries();
+            }
         }
 
         private void LoadXml_Click(object sender, RoutedEventArgs e)
@@ -70,20 +71,24 @@ namespace Tsw.WpfApp
             {
                 var loaded = LoadService.Load(ofd.FileName);
 
-                Cars.Clear();
+                Auta.Clear();
                 foreach (var c in loaded)
-                    Cars.Add(c);
+                {
+                    Auta.Add(c);
+                }
             }
         }
 
         private void RecalculateSummaries()
         {
-            CarSummaries.Clear();
+            AutoSummaries.Clear();
 
-            var summary = AggregationService.Aggregate(Cars);
+            var summary = AggregationService.Aggregate(Auta);
 
             foreach (var item in summary)
-                CarSummaries.Add(item);
+            {
+                AutoSummaries.Add(item);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

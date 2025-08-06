@@ -12,10 +12,10 @@ namespace Tsw.WpfApp.Services
 {
     public class LoadService
     {
-        public static List<Car> Load(string path)
+        public static List<Auto> Load(string path)
         {
             var doc = XDocument.Load(path);
-            return doc.Root.Elements("Auto").Select(static x => new Car
+            return doc.Root.Elements("Auto").Select(static x => new Auto
             {
                 NazevModelu = x.Element("NazevModelu")?.Value,
                 DatumProdeje = DateTime.Parse(x.Element("DatumProdeje")?.Value, CultureInfo.InvariantCulture),

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace Tsw.WpfApp.Model
 {
-    public class Car : INotifyPropertyChanged
+    public class Auto : INotifyPropertyChanged
     {
         public string NazevModelu { get; set; }
 

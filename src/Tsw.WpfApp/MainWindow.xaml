@@ -8,13 +8,31 @@
         Title="MainWindow" Height="550" Width="800">
     <Grid Margin="10">
         <StackPanel>
+            
             <Button Content="Load XML" Click="LoadXml_Click" Height="30" Margin="0,0,0,10" Width="120" HorizontalAlignment="Left"/>
+            
             <Label>Cars:</Label>
-            <DataGrid ItemsSource="{Binding Cars}" AutoGenerateColumns="True" x:Name="CarsGridView" Margin="0,0,0,10" />
+
+            <DataGrid ItemsSource="{Binding Auta}" AutoGenerateColumns="False" x:Name="CarsGridView" Margin="0,0,0,10" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Nazev modelu" Binding="{Binding NazevModelu}" />
+                    <DataGridTextColumn Header="Datum prodeje" Binding="{Binding DatumProdeje}" />
+                    <DataGridTextColumn Header="Cena" Binding="{Binding Cena, StringFormat=N2}" />
+                    <DataGridTextColumn Header="DPH" Binding="{Binding DPH, StringFormat=N2}" />
+                </DataGrid.Columns>
+            </DataGrid>
 
             <Label>Results:</Label>
-            <DataGrid ItemsSource="{Binding CarSummaries}" AutoGenerateColumns="True" x:Name="ResultsGridView" IsReadOnly="True" />
 
+            <DataGrid ItemsSource="{Binding AutoSummaries}" AutoGenerateColumns="False" x:Name="ResultsGridView" IsReadOnly="True" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Nazev modelu" Binding="{Binding NazevModelu}" />
+                    <DataGridTextColumn Header="Cena bez DPH" Binding="{Binding CenaBezDPH, StringFormat=N2}" />
+                    <DataGridTextColumn Header="Cena s DPH" Binding="{Binding CenaSDPH, StringFormat=N2}" />
+                </DataGrid.Columns>
+            </DataGrid>
+            
         </StackPanel>
     </Grid>
 </Window>
+ 
