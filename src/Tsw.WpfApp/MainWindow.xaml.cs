@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using Tsw.WpfApp.Model;
 using Tsw.WpfApp.Services;
@@ -69,12 +70,38 @@ namespace Tsw.WpfApp
             OpenFileDialog ofd = new();
             if (ofd.ShowDialog() == true)
             {
-                var loaded = LoadService.Load(ofd.FileName);
-
-                Auta.Clear();
-                foreach (var c in loaded)
+                try
                 {
-                    Auta.Add(c);
+                    var loaded = LoadService.Load(ofd.FileName);
+
+                    Auta.Clear();
+                    foreach (var c in loaded)
+                    {
+                        Auta.Add(c);
+                    }
+                }
+                catch (FileNotFoundException)
+                {
+                    MessageBox.Show("Soubor nebyl nalezen.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    MessageBox.Show("Nemáte oprávnění číst tento soubor.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (FormatException ex)
+                {
+                    MessageBox.Show("Chybný formát dat v XML (datum/cena/DPH).\n\n" + ex.Message,
+                                    "Chyba formátu", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (System.Xml.XmlException ex)
+                {
+                    MessageBox.Show($"XML je poškozené nebo neplatné.\nŘádek {ex.LineNumber}, sloupec {ex.LinePosition}.\n\n{ex.Message}",
+                                    "Chyba XML", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Došlo k neočekávané chybě.\n\n" + ex.Message,
+                                    "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
